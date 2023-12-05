@@ -10,13 +10,48 @@
 </head>
 <body>
 
-<div class="container pt-5" id="root">
-    <div class="card center">
-        <h1>{{ title }}: {{ counter }}</h1>
-        <div>
-            <button class="btn primary" v-on:click="counter++">+</button>
-            <button class="btn danger" v-on:click="counter--">-</button>
+<div class="container" id="root">
+    <div class="card">
+        <h1 :style="{
+        color: inputValue.length ? 'darkgreen' : 'darkred',
+        fontSize: inputValue.length ? '2rem' : '1.9rem'
+        }">
+            {{ title }}
+        </h1>
+        <div class="form-control">
+            <input
+                    type="text"
+                    v-bind:placeholder="placeholderString"
+                    :value="inputValue"
+                    v-model="inputValue"
+                    @keypress.enter="addNewNote"
+            />
         </div>
+        <button class="btn" v-on:click="addNewNote">Добавить</button>
+        <hr/>
+        <ul class="list" v-if="notes.length !== 0">
+            <li class="list-item" v-for="(note, index) in notes">
+<!--               <span :class="note.length > 10 ? 'bold' : 'primary'">-->
+<!--               <span :class="{-->
+<!--               'primary': true,-->
+<!--               'bold': note.length > 5-->
+<!--               }">-->
+                <span :class="['primary', {'bold': note.length > 10}]">
+                   {{ index + 1 }}. {{ toUpperCase(note) }}
+               </span>
+                <button
+                        class="btn danger"
+                        v-on:click="removeNote(index, $event)"
+                >Delete
+                </button>
+            </li>
+            <hr>
+            <li>
+                <strong>Общее количество: {{notes.length}}</strong> | Удвоенное: {{doubleCountComputed}}
+            </li>
+        </ul>
+        <div v-else-if="notes.length === 0">Заметок нет</div>
+        <!--        <div v-else>Заметок нет</div>-->
     </div>
 </div>
 
