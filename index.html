@@ -12,10 +12,10 @@
 
 <div class="container pt-5" id="root">
     <div class="card center">
-        <h1>Счетчик: {{ counter }}</h1>
+        <h1>{{ title }}: {{ counter }}</h1>
         <div>
-            <button class="btn primary">+</button>
-            <button class="btn danger">-</button>
+            <button class="btn primary" v-on:click="counter++">+</button>
+            <button class="btn danger" v-on:click="counter--">-</button>
         </div>
     </div>
 </div>
