@@ -1,23 +1,80 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vue</title>
-    <link rel="stylesheet" href="theme.css">
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue</title>
+  <link rel="stylesheet" href="theme.css">
+  <style>
+      [v-cloak] {
+          display: none;
+      }
+  </style>
 </head>
 <body>
 
-<div class="container pt-5" id="root">
-    <div class="card center">
-        <h1>{{ title }}: {{ counter }}</h1>
-        <div>
-            <button class="btn primary" v-on:click="counter++">+</button>
-            <button class="btn danger" v-on:click="counter--">-</button>
-        </div>
-    </div>
+<div class="container pt-5" id="root" v-cloak>
+  <div class="card center">
+    <ol class="list">
+      <todo-item
+          class="list-item"
+          v-for="(item, index) in todos"
+          v-bind:todo="item"
+          v-bind:index="index"
+          v-bind:key="item"
+      ></todo-item>
+    </ol>
+  </div>
+
+  <br>
+
+  <div class="card center">
+    <ol class="list">
+      <li
+          class="list-item"
+          v-for="(todo, index) in todos"
+      >
+        {{ index + 1 }}. {{ todo.text }}
+      </li>
+    </ol>
+  </div>
+
+  <br>
+
+  <div class="card center">
+    <p v-if="boolean">{{ message }}</p>
+    <button
+        class="btn"
+        v-on:click="toggleBoolean">
+      Boolean click
+    </button>
+  </div>
+
+  <br>
+
+  <div class="card center">
+    <p>{{ message }}</p>
+    <input v-model="message">
+  </div>
+
+  <br>
+
+  <div class="card center">
+    <p>{{ message }}</p>
+    <button class="btn" v-on:click="reverseMessage">
+      Перевернуть сообщение
+    </button>
+  </div>
+
+  <br>
+
+  <div class="card center">
+    <h1 v-bind:title="myTitle">
+      {{ myTitle }} {{ counter }}
+    </h1>
+  </div>
 </div>
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
